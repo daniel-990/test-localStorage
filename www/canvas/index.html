@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=no">
+	<title>canvas</title>
+	<link rel="stylesheet" type="text/css" href="css/canvas.css">
+	<script type="text/javascript" src="../js/librerias/jquery-2.1.3.min.js"></script>
+    <script type="text/javascript" src="../js/librerias/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="../js/librerias/jquery.ui.touch-punch.min.js"></script>
+    <script type="text/javascript" src="../js/librerias/jquery.mobile-1.4.5.min.js"></script>
+	<script type="text/javascript" src="js/jcanvas.min.js"></script>
+    <script type="text/javascript" src="js/utils.js"></script>
+	<script type="text/javascript" src="js/app.js"></script>
+</head>
+<body>
+	<h4 id="h1"></h4>
+    <h6 id="h6">contador:<h5 id="timer"></h5></h6>
+	<h6 id="h5">puntos:<h5 id="score"></h5><h6>
+
+<div id="botoneria">
+	<div id="boton_atras" class="boton" type="submit"><p>atras</p></div>
+    <div id="btn_borrar" class="boton" type="submit"><p>borrar</p></div>
+    <div id="play" class="boton" type="submit"><p>reinicio</p></div>
+</div>
+	<canvas id="canvas" width='340' height='490'></canvas>
+<script type="text/javascript">
+    window.onload = function(){
+    var canvas = document.getElementById("canvas");
+    var ctx = canvas.getContext("2d");
+    var mouse = utils.captureMouse(canvas);
+
+    var cursor0;
+    var cursorX = canvas.width/2.7;
+    var cursorY = canvas.height/1.4;
+    var tamanox = 80;
+    var tamanoy = 86;
+
+    var enemigo0;
+    var enemigoX = canvas.width  - 380;
+    var enemigoY = canvas.height - 3;
+    var tamano_enemigoX = 50;
+    var tamano_enemigoY = 50;
+
+    var enemigo1;
+    var enemigo1_X = canvas.width  - 300;
+    var enemigo1_Y = canvas.height - 3;
+
+    var enemigo2;
+    var enemigo2_X = canvas.width  - 200;
+    var enemigo2_Y = canvas.height - 3;
+
+    var enemigo3;
+    var enemigo3_X = canvas.width  - 90;
+    var enemigo3_Y = canvas.height - 3;
+
+    var enemigo4;
+    var enemigo4_X = canvas.width  - 150;
+    var enemigo4_Y = canvas.height/3;
+
+    var enemigo5;
+    var enemigo5_X = canvas.width  - 250;
+    var enemigo5_Y = canvas.height - 3;
+
+    var colision = false;
+    var score = 0;
+    var ultimo_puntaje = localStorage.score2;
+    var playGame = true;
+    var timer = 240;
+    var playGame2;
+    var playGame3 = true;
+
+    var btn_play = $("#play");
+
+    cursor0 = new Image();
+    cursor0.src = 'img/img2.png';
+
+    enemigo0 = new Image();
+    enemigo0.src = 'img/img1.png';
+
+    enemigo1 = new Image();
+    enemigo1.src = 'img/img1.png';
+
+    enemigo2 = new Image();
+    enemigo2.src = 'img/img1.png';
+
+    enemigo3 = new Image();
+    enemigo3.src = 'img/img1.png';
+
+    enemigo4 = new Image();
+    enemigo4.src = 'img/img1.png';
+
+    enemigo5 = new Image();
+    enemigo5.src = 'img/img1.png';
+
+      /* $("#derecha").on('touchstart', function(e){        
+       log.value = "derecha";
+          cursorX += 30;
+       });
+
+       $("#izquierda").on('touchstart', function(e){        
+       log.value = "izquierda";
+          cursorY += 30;
+       });*/
+
+       $("#canvas").on('swipeleft', function(event) {
+            cursorX -= 50;
+       });
+       $("#canvas").on('swiperight', function(event) {
+            cursorX += 50;
+       });
+     /*  $("#canvas").on('tap', function(event) {
+            cursorY -= 30;
+       });
+       $("#canvas").on('taphold', function(event) {
+            cursorY += 30;
+       });*/
+       $("#play").on('touchstart', function(event) {
+       location.reload();
+       });
+
+    
+    function animation(){
+    	enemigoY +=30;
+        enemigo1_Y +=30;
+        enemigo2_Y +=30;
+        enemigo3_Y +=30;
+        enemigo4_Y +=30;
+        enemigo5_Y +=30;
+
+    	redraw();
+        playGame2 = setTimeout(animation, 95);
+
+/*colisiones*/
+        tx1 = cursorX - enemigoX;
+        ty1 = cursorY - enemigoY;
+
+        dist1 = Math.sqrt(tx1*tx1 + ty1*ty1);
+
+         if(tx1 && dist1<100){
+              colision = true;
+            if(colision == true){
+               score +=2;
+            }
+         }
+/*colisiones*/
+
+if (playGame == true){
+    $("#score").html(""+ score);
+    $("#timer").html(""+ timer);
+    localStorage.score2 = score;
+    timer -=1;
+    if(timer == -1){
+    clearTimeout(playGame2);
+    console.log(localStorage.user1 + " tus puntos son: " + localStorage.score2);
+    }; 
+};
+btn_play.on('click',function(event) {});
+}//animation;
+
+    function redraw(){
+
+
+      window.requestAnimationFrame(redraw, canvas);
+      ctx.clearRect(0,0,canvas.width, canvas.height);
+
+     ctx.drawImage(cursor0, 0, 0,tamanox,tamanoy, cursorX, cursorY,tamanox,tamanoy);
+     if(cursorY - cursor0.height  > 500){} 
+
+     ctx.drawImage(enemigo0, 0, 0,tamano_enemigoX,tamano_enemigoY, enemigoX, enemigoY,tamano_enemigoX,tamano_enemigoY);
+     if(enemigoY - enemigo0.height  > 500)
+     	{
+     		enemigoY = canvas.height - Math.random() * 1000;
+     		enemigoX = -384;
+     		enemigoX = canvas.width  - Math.random() * 380;
+     	} 
+
+     ctx.drawImage(enemigo1, 0, 0,50,50, enemigo1_X, enemigo1_Y,50,50);
+     if(enemigo1_Y - enemigo1.height  > 500)
+     	{
+     		enemigo1_Y = canvas.height - Math.random() * 1000;
+     		enemigo1_X = -300;
+     		enemigo1_X = canvas.width  - Math.random() * 300;
+     	}
+
+     ctx.drawImage(enemigo2, 0, 0,50,50, enemigo2_X, enemigo2_Y,50,50);
+     if(enemigo2_Y - enemigo1.height  > 500)
+     	{
+     		enemigo2_Y = canvas.height - Math.random() * 1000;
+     		enemigo2_X = -250;
+     		enemigo2_X = canvas.width  - Math.random() * 200;
+     	} 
+
+     ctx.drawImage(enemigo3, 0, 0,50,50, enemigo3_X, enemigo3_Y,50,50);
+     if(enemigo3_Y - enemigo3.height  > 500)
+     	{
+     		enemigo3_Y = canvas.height - Math.random() * 1000;
+     		enemigo3_X = -385;
+     		enemigo3_X = canvas.width  - Math.random() * 200;
+     	}
+     ctx.drawImage(enemigo4, 0, 0,50,50, enemigo4_X, enemigo4_Y,50,50);
+     if(enemigo4_Y - enemigo4.height  > 500)
+     	{
+     		enemigo4_Y = canvas.height - Math.random() * 1000;
+     		enemigo4_X = -385;
+     		enemigo4_X = canvas.width  - Math.random() * 200;
+     	}
+     ctx.drawImage(enemigo5, 0, 0,50,50, enemigo5_X, enemigo5_Y,50,50);
+     if(enemigo5_Y - enemigo5.height  > 500)
+     	{
+     		enemigo5_Y = canvas.height - Math.random() * 500;
+     		enemigo5_X = -385;
+     		enemigo5_X = canvas.width  - Math.random() * 200;
+     	}
+    }
+     animation();
+}
+	</script>
+</body>
+</html>

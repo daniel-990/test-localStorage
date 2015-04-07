@@ -1,0 +1,72 @@
+body {
+	background-color:#24ACEF;
+}
+.ui-loader{
+  display: none !important;
+  position: absolute;
+  z-index: -1000;
+  margin-top: -100px;
+}
+#botoneria{
+
+}
+
+.ui-btn{
+    margin-left: -20%;
+}
+.boton{
+width: 50px;
+height: 30px;
+}
+#h6{
+	position: absolute;
+	top: 0px;
+	bottom: 0px;
+	left: 100px;
+	right: 0px;
+	height: 10px;
+}
+#timer{
+	position: absolute;
+	top: 15px;
+	bottom: 0px;
+	left: 100px;
+	right: 0px;
+	height: 10px;
+}
+#h5{
+	position: absolute;
+	top: 0px;
+	bottom: 0px;
+	left: 150px;
+	right: 0px;
+	height: 10px;
+}
+#score{
+	position: absolute;
+	top: 15px;
+	bottom: 0px;
+	left: 150px;
+	right: 0px;
+	height: 10px;
+}
+#boton_atras{
+    background-color: #07C700;
+    cursor: pointer;
+    margin: 0px 0px 0px 0px !important;
+}
+#btn_borrar{
+	background-color: #C70004;
+	cursor: pointer;
+	margin: -41px 0px 0px 55px !important;
+}
+#play{
+	background-color: #C79F00;
+	cursor: pointer;
+	margin: -41px 0px 0px 110px !important;
+}
+
+#canvas{
+	background-color: #29C7C1;
+	border: 2px solid white;
+}
